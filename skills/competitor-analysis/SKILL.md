@@ -22,6 +22,13 @@ in competitor listings (prohibited characters, restricted language, formatting v
 Load `references/rufus-optimization.md` — used when evaluating competitor Rufus
 readiness and identifying AI discovery gaps the user can exploit.
 
+If `brand-context.md` exists in the project root or `.agents/` directory,
+load it for shared positioning rules and brand guardrails.
+
+If `products/[ASIN]/product-context.md` exists for the product being compared,
+load it for the user's product facts. Prefer `User Confirmed Data`, then
+`Amazon Observed Data`, then `AI Inferences`.
+
 ## What This Skill Analyzes
 
 For each competitor listing, evaluate:

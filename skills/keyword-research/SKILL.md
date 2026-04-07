@@ -22,8 +22,14 @@ construction rules, byte counting, and what to include or exclude.
 Load `references/amazon-style-guide.md` — used when checking keyword
 compliance (prohibited terms, stop words, formatting rules).
 
-If `product-context.md` exists in the project root or `.agents/` directory,
-load it for target audience, product details, and past keyword learnings.
+If `brand-context.md` exists in the project root or `.agents/` directory,
+load it for shared target audience guidance and past keyword learnings.
+
+If `products/[ASIN]/product-context.md` exists, load it for product-specific
+details. Prefer `User Confirmed Data`, then `Amazon Observed Data`, then `AI Inferences`.
+
+If multiple product folders exist and the user has not specified an ASIN, ask
+which ASIN to use before building the keyword map.
 
 ## How This Skill Works
 

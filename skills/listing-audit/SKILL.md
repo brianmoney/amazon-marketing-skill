@@ -18,13 +18,19 @@ search and Rufus AI discovery.
 
 Load `references/amazon-style-guide.md`, `references/rufus-optimization.md`, and `references/backend-keywords-guide.md`.
 
-If `product-context.md` exists in the project root or `.agents/` directory,
-load it for brand context and past learnings that inform audit recommendations.
+If `brand-context.md` exists in the project root or `.agents/` directory,
+load it for shared brand context and past learnings that inform audit recommendations.
+
+If `products/[ASIN]/product-context.md` exists, load it for product-specific
+context. Prefer `User Confirmed Data`, then `Amazon Observed Data`, then `AI Inferences`.
+
+If multiple product folders exist and the user has not specified an ASIN, ask
+which ASIN to use before auditing.
 
 The user must provide either:
 - A full listing (title, bullets, description, and ideally backend keywords)
-- An Amazon URL or ASIN (if MCP is connected, pull live data; otherwise ask the
-  user to paste the content)
+- An Amazon URL or ASIN (if Playwright or MCP tooling is connected, pull live
+  data; otherwise ask the user to paste the content)
 - A screenshot of a listing (describe what you see)
 
 ## Audit Process

@@ -30,8 +30,14 @@ Load `references/amazon-style-guide.md` for current rules.
 Load `references/rufus-optimization.md` for AI discovery optimization.
 Load `references/backend-keywords-guide.md` for backend string construction rules.
 
-If `product-context.md` exists in the project root or `.agents/` directory,
-load it for brand voice and past learnings.
+If `brand-context.md` exists in the project root or `.agents/` directory,
+load it for shared brand voice and past learnings.
+
+If `products/[ASIN]/product-context.md` exists, load it for product-specific
+facts. Prefer `User Confirmed Data`, then `Amazon Observed Data`, then `AI Inferences`.
+
+If multiple product folders exist and the user has not specified an ASIN, ask
+which ASIN to use before writing.
 
 ## Workflow
 

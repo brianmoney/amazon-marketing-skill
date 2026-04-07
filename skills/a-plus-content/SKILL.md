@@ -20,8 +20,13 @@ replaces the standard product description on the detail page.
 - Load `references/amazon-style-guide.md` for compliance rules
 - Load `references/rufus-optimization.md` — A+ Content text IS read by Rufus
   even though it is NOT indexed for traditional Amazon search
-- If `product-context.md` exists in the project root or `.agents/` directory,
-  load it for brand voice, target audience, and past learnings
+- If `brand-context.md` exists in the project root or `.agents/` directory,
+  load it for shared brand voice and past learnings
+- If `products/[ASIN]/product-context.md` exists, load it for product-specific
+  target audience and product facts. Prefer `User Confirmed Data`, then
+  `Amazon Observed Data`, then `AI Inferences`
+- If multiple product folders exist and the user has not specified an ASIN,
+  ask which ASIN to use before planning A+ Content
 
 ## Key Facts About A+ Content
 
