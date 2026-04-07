@@ -11,6 +11,7 @@ any Amazon listing content.
 **Amazon category**:
 **Marketplace(s)**: US / CA / UK / EU / Other:
 **Brand Registered?**: Yes / No
+**Seller SKU (if known)**:
 **Current ASIN (if updating existing listing)**:
 
 ## Product Details
@@ -46,7 +47,7 @@ any Amazon listing content.
 2.
 3.
 
-**Competitor ASINs or products to analyze** (optional, 3-5):
+**Competitor ASINs, SKUs, or products to analyze** (optional, 3-5):
 1.
 2.
 3.

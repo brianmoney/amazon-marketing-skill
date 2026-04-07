@@ -1,20 +1,20 @@
 ---
 name: product-onboarding
 description: >
-  Onboard one or more Amazon ASINs into structured product context files.
+  Onboard one or more Amazon products into structured product context files.
   Use when the user wants to bootstrap product information from live Amazon
-  pages, scrape ASINs listed in asins.csv, create `products/[ASIN]/product-context.md`,
+  pages, scrape products listed in asins.csv, create `products/[ASIN]/product-context.md`,
   or fill in missing product context before listing optimization work.
 ---
 
 # Product Onboarding
 
-Builds structured per-ASIN context files that downstream Amazon marketing
+Builds structured product context files that downstream Amazon marketing
 skills can rely on.
 
 ## Goal
 
-For each ASIN the user wants to onboard:
+For each product the user wants to onboard:
 
 1. Resolve the product detail page URL
 2. Gather as much public PDP data as reasonably possible
@@ -29,31 +29,40 @@ For each ASIN the user wants to onboard:
 - Onboarding queue lives in `asins.csv` in the project root
 - Product files live at `products/[ASIN]/product-context.md`
 
+Sellers may refer to products by SKU or ASIN. Keep the canonical folder name as
+the ASIN when known, and store the seller-facing identifier in the file's
+`SKU:` field so downstream skills can resolve products by either identifier.
+
 If `brand-context.md` does not exist, create it from
 `templates/brand-context.template.md` or gather the minimum required fields.
 
 If `products/[ASIN]/product-context.md` does not exist, create it from
 `templates/product-context.template.md`.
 
+If the seller provides only a SKU and there is no existing matching product
+context file, ask for the ASIN or Amazon URL before creating a new canonical
+product file.
+
 ## Input Sources
 
 Preferred order:
 
 1. `asins.csv` in the project root
-2. ASINs the user provides in chat
+2. ASINs, SKUs, or Amazon URLs the user provides in chat
 3. Existing product folders under `products/`
 
 Suggested `asins.csv` columns:
 
 ```csv
-asin,marketplace,amazon_url,product_label,status,notes
+asin,sku,marketplace,amazon_url,product_label,status,notes
 ```
 
 Required columns:
-- `asin`
 - `marketplace`
+- At least one of `asin` or `amazon_url`
 
 Optional columns:
+- `sku`
 - `amazon_url`
 - `product_label`
 - `status`
@@ -82,6 +91,7 @@ the next method.
 Extract only what is visible with reasonable confidence:
 
 - ASIN
+- SKU (if known)
 - Marketplace
 - Canonical product URL
 - Product title
@@ -116,9 +126,9 @@ Never place guessed differentiators, keyword targets, or compliance claims into
 
 ## User Interview Rules
 
-After scraping all requested ASINs, ask a consolidated follow-up block rather
+After scraping all requested products, ask a consolidated follow-up block rather
 than interrupting after every product, unless the user is onboarding only one
-ASIN and clearly wants an interactive workflow.
+product and clearly wants an interactive workflow.
 
 Ask only for missing or low-confidence information, prioritizing:
 
@@ -129,7 +139,7 @@ Ask only for missing or low-confidence information, prioritizing:
 5. Warranty or guarantee details
 6. Primary and secondary keywords
 7. Converting search terms from ads or prior testing
-8. Competitor ASINs to benchmark against
+8. Competitor ASINs or SKUs to benchmark against
 9. Claims or phrases to avoid
 
 If scraping fails completely, ask the user to paste the current title, bullets,
@@ -141,18 +151,23 @@ description, and product specs before asking broader strategic questions.
 
 1. Load `brand-context.md` if present
 2. Read `asins.csv` if present
-3. Determine which ASINs need onboarding
-4. For each ASIN, load any existing `products/[ASIN]/product-context.md`
+3. Determine which products need onboarding
+4. Resolve each product by SKU or ASIN, then load any existing `products/[ASIN]/product-context.md`
 
 ### Step 2: Scrape or Fetch PDP Data
 
-For each ASIN:
+For each product:
 
 1. Resolve URL from `amazon_url` if provided, otherwise build marketplace PDP URL
 2. Attempt Playwright/browser-first capture
 3. Fall back to non-browser fetch methods if needed
 4. Record the source method and confidence
 5. Update `Amazon Observed Data`
+
+If the user provides a SKU without an ASIN, first check whether an existing
+product context file already matches that SKU. If yes, reuse it. If no, ask for
+the ASIN or Amazon URL before creating a new canonical product file and preserve
+the SKU in the context file for future lookup.
 
 ### Step 3: Infer Carefully
 
@@ -167,7 +182,8 @@ Mark anything uncertain as requiring user confirmation.
 
 ### Step 4: Ask Missing Questions
 
-Batch follow-up prompts by ASIN. Keep them compact and specific.
+Batch follow-up prompts by product. Use the seller's SKU when available because
+it is usually more recognizable than the ASIN. Keep prompts compact and specific.
 
 ### Step 5: Write Files
 
@@ -195,7 +211,7 @@ fallback interview sequence.
 - Which marketplaces matter most right now?
 - Are you Brand Registered?
 
-### Per-ASIN Questions
+### Per-Product Questions
 
 - In one sentence, what is this product and who is it for?
 - What problem does it solve better than competitors?
@@ -203,9 +219,10 @@ fallback interview sequence.
 - Which materials, dimensions, or included items should be corrected or expanded?
 - Are there certifications, safety claims, or compliance notes we can mention?
 - Is there warranty or guarantee language we can use?
-- What primary and secondary keywords matter most for this ASIN?
+- What is the SKU for this product in your catalog?
+- What primary and secondary keywords matter most for this product?
 - Which search terms or ad keywords have already converted well?
-- Which competitor ASINs should this product be benchmarked against?
+- Which competitor ASINs or SKUs should this product be benchmarked against?
 
 ### If The PDP Could Not Be Read
 
@@ -225,4 +242,4 @@ After onboarding, other Amazon marketing skills should use:
 2. `products/[ASIN]/product-context.md` for product-specific data
 
 If multiple products are onboarded and the user does not specify one, ask which
-ASIN to use before generating listing content.
+SKU or ASIN to use before generating listing content.

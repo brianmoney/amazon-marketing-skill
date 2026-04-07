@@ -1,6 +1,7 @@
 # Listing Audit Scorecard
 
 ## Product: [product name]
+## SKU: [SKU]
 ## ASIN: [ASIN]
 ## Date: [date]
 ## Audited by: [AI / human]

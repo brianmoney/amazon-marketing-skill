@@ -1,6 +1,7 @@
 # Product Context
 
 ## Product Identity
+- SKU:
 - ASIN:
 - Marketplace:
 - Canonical URL:
@@ -44,7 +45,7 @@
 - Primary keywords:
 - Secondary keywords:
 - Converting search terms:
-- Competitor ASINs:
+- Competitor ASINs / SKUs:
 - Claims/phrases to avoid:
 - Brand-specific notes:
 

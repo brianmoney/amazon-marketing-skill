@@ -28,8 +28,11 @@ load it for shared target audience guidance and past keyword learnings.
 If `products/[ASIN]/product-context.md` exists, load it for product-specific
 details. Prefer `User Confirmed Data`, then `Amazon Observed Data`, then `AI Inferences`.
 
-If multiple product folders exist and the user has not specified an ASIN, ask
-which ASIN to use before building the keyword map.
+Resolve product references by SKU or ASIN using the product context file's
+`SKU:` and `ASIN:` fields.
+
+If multiple product folders exist and the user has not specified a product, ask
+which SKU or ASIN to use before building the keyword map.
 
 ## How This Skill Works
 
@@ -86,10 +89,11 @@ product description and category knowledge.
 
 Ask the user for:
 - Product name and type
+- Seller SKU or ASIN (if known)
 - 3-5 words they'd use to describe the product
 - What problem it solves
 - Who the target buyer is
-- 2-3 competitor products (names or ASINs)
+- 2-3 competitor products (names, SKUs, or ASINs)
 
 From these inputs, generate an initial seed list of 10-15 terms.
 
@@ -120,7 +124,7 @@ For each seed keyword, expand using these methods:
 
 ### Step 3: Competitive Gap Analysis
 
-If the user provides competitor ASINs or listing content:
+If the user provides competitor ASINs, competitor SKUs, or listing content:
 1. Extract all keywords from competitor titles, bullets, descriptions
 2. Identify terms they target that the user does NOT
 3. Flag high-value gaps (relevant terms competitors rank for that user misses)

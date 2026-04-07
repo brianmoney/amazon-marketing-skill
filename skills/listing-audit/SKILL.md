@@ -24,12 +24,15 @@ load it for shared brand context and past learnings that inform audit recommenda
 If `products/[ASIN]/product-context.md` exists, load it for product-specific
 context. Prefer `User Confirmed Data`, then `Amazon Observed Data`, then `AI Inferences`.
 
-If multiple product folders exist and the user has not specified an ASIN, ask
-which ASIN to use before auditing.
+Resolve product references by SKU or ASIN using the product context file's
+`SKU:` and `ASIN:` fields.
+
+If multiple product folders exist and the user has not specified a product, ask
+which SKU or ASIN to use before auditing.
 
 The user must provide either:
 - A full listing (title, bullets, description, and ideally backend keywords)
-- An Amazon URL or ASIN (if Playwright or MCP tooling is connected, pull live
+- An Amazon URL, ASIN, or seller SKU (if Playwright or MCP tooling is connected, pull live
   data; otherwise ask the user to paste the content)
 - A screenshot of a listing (describe what you see)
 

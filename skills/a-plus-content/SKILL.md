@@ -25,8 +25,10 @@ replaces the standard product description on the detail page.
 - If `products/[ASIN]/product-context.md` exists, load it for product-specific
   target audience and product facts. Prefer `User Confirmed Data`, then
   `Amazon Observed Data`, then `AI Inferences`
-- If multiple product folders exist and the user has not specified an ASIN,
-  ask which ASIN to use before planning A+ Content
+- Resolve product references by SKU or ASIN using the product context file's
+  `SKU:` and `ASIN:` fields
+- If multiple product folders exist and the user has not specified a product,
+  ask which SKU or ASIN to use before planning A+ Content
 
 ## Key Facts About A+ Content
 
@@ -185,6 +187,7 @@ For each image needed, provide a brief the user (or designer) can execute:
 # A+ Content Plan
 
 ## Product: [product name]
+## SKU: [if known]
 ## ASIN: [if known]
 
 ## Module Layout (5 modules)

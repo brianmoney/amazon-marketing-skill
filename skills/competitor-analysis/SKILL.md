@@ -29,6 +29,9 @@ If `products/[ASIN]/product-context.md` exists for the product being compared,
 load it for the user's product facts. Prefer `User Confirmed Data`, then
 `Amazon Observed Data`, then `AI Inferences`.
 
+Resolve the user's product by SKU or ASIN using the product context file's
+`SKU:` and `ASIN:` fields.
+
 ## What This Skill Analyzes
 
 For each competitor listing, evaluate:
@@ -43,8 +46,8 @@ For each competitor listing, evaluate:
 
 ## Input Requirements
 
-The user should provide 3-5 competitor ASINs or listing URLs. If they can't
-provide ASINs, ask them to paste competitor listing content (title, bullets,
+The user should provide 3-5 competitor ASINs, competitor SKUs, or listing URLs.
+If they can't provide identifiers, ask them to paste competitor listing content (title, bullets,
 description).
 
 If MCP servers are connected (AmazonSeller-mcp-server), pull catalog data directly.
@@ -124,7 +127,7 @@ After analyzing individual listings, identify:
 
 ## Individual Teardowns
 
-### Competitor 1: [Brand + ASIN]
+### Competitor 1: [Brand + SKU/ASIN]
 **Title**: [their title]
 **Positioning**: [how they position]
 **Strengths**: [what they do well]

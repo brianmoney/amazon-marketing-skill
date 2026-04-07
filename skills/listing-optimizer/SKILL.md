@@ -36,8 +36,11 @@ load it for shared brand voice and past learnings.
 If `products/[ASIN]/product-context.md` exists, load it for product-specific
 facts. Prefer `User Confirmed Data`, then `Amazon Observed Data`, then `AI Inferences`.
 
-If multiple product folders exist and the user has not specified an ASIN, ask
-which ASIN to use before writing.
+Resolve product references by SKU or ASIN using the product context file's
+`SKU:` and `ASIN:` fields.
+
+If multiple product folders exist and the user has not specified a product, ask
+which SKU or ASIN to use before writing.
 
 ## Workflow
 

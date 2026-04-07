@@ -4,13 +4,13 @@ description: >
   Amazon product listing optimization skill for Claude Code and AI agents.
   Use this skill when the user mentions Amazon listings, product titles,
   bullet points, product descriptions, backend keywords, search terms,
-  A+ Content, listing audit, Amazon SEO, ASIN optimization, Rufus optimization,
+  A+ Content, listing audit, Amazon SEO, ASIN optimization, SKU optimization, Rufus optimization,
   or anything related to creating, improving, or auditing Amazon product
   detail pages. Also trigger when the user mentions FBA/FBM product copy,
   Amazon keyword research, competitor listing analysis, or Brand Registry content.
-  If the user pastes an Amazon URL, ASIN, or product data and wants copy written
+  If the user pastes an Amazon URL, ASIN, SKU, or product data and wants copy written
   or improved, use this skill. Also trigger when the user wants to onboard
-  ASINs from `asins.csv`, create `products/[ASIN]/product-context.md`, or
+  products from `asins.csv`, create `products/[ASIN]/product-context.md`, or
   bootstrap product context from live Amazon pages. Even if they just say
   "optimize my listing" or "write bullets" — this is the skill.
 ---
@@ -35,7 +35,7 @@ practices for both A9/A10 keyword search and Rufus AI conversational discovery.
    → Interview for product details using `templates/listing-brief.md`
    → Generate title → bullets → description → backend keywords
 
-2. **User wants to onboard products from ASINs or build product context files?**
+2. **User wants to onboard products from ASINs/SKUs or build product context files?**
    → Load `skills/product-onboarding/SKILL.md`
    → Read `asins.csv` if present
    → Create or update `products/[ASIN]/product-context.md`
@@ -46,7 +46,7 @@ practices for both A9/A10 keyword search and Rufus AI conversational discovery.
 
 4. **User wants keyword research?**
    → Load `skills/keyword-research/SKILL.md`
-   → Accept seed keywords, competitor ASINs, or product descriptions
+   → Accept seed keywords, competitor ASINs, competitor SKUs, or product descriptions
    → Output structured keyword map
 
 5. **User wants competitor analysis?**
@@ -65,8 +65,13 @@ practices for both A9/A10 keyword search and Rufus AI conversational discovery.
 Before generating any product-specific content, resolve context in this order:
 
 1. Load `brand-context.md` from the project root or `.agents/` directory if it exists
-2. Load `products/[ASIN]/product-context.md` for the product being worked on
-3. If multiple products exist and the user has not specified one, ask which ASIN to use
+2. Resolve the product the user names by SKU or ASIN, then load its `products/[ASIN]/product-context.md`
+3. If multiple products exist and the user has not specified one, ask which SKU or ASIN to use
+
+When resolving a product reference, sellers may identify products by SKU or ASIN.
+The canonical file path remains `products/[ASIN]/product-context.md`, so use the
+`SKU:` field inside the file for human-friendly lookup when the seller provides a
+SKU instead of an ASIN.
 
 If no product context file exists, either run `skills/product-onboarding/SKILL.md`
 or interview the user for minimum viable context before writing:
