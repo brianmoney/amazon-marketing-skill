@@ -49,6 +49,22 @@ Just ask your AI agent:
 - "Analyze these competitor listings" + paste ASINs/content
 - "Plan A+ Content for my product"
 
+### Personalizing for Your Brand
+
+Create a `product-context.md` file in your project root (or `.agents/`
+directory) to give the skill persistent brand context. When present, all
+sub-skills load it automatically before generating content.
+
+Useful content to include:
+- Brand voice and tone guidelines
+- Target audience description
+- Catalog overview and product line structure
+- Keywords that have converted well in past campaigns
+- Terms or phrases to always avoid
+- Past learnings from listing tests
+
+No required format — plain markdown notes work fine.
+
 ## Structure
 
 ```
@@ -68,10 +84,14 @@ amazon-marketing-skill/
 │   ├── rufus-optimization.md             # AI shopping assistant strategies
 │   └── backend-keywords-guide.md         # 249-byte rules, best practices
 │
-└── templates/
-    ├── listing-brief.md                  # Product info input template
-    ├── keyword-map.md                    # Keyword mapping output template
-    └── audit-scorecard.md                # Audit scoring template
+├── templates/
+│   ├── listing-brief.md                  # Product info input template
+│   ├── keyword-map.md                    # Keyword mapping output template
+│   └── audit-scorecard.md                # Audit scoring template
+│
+└── product-context.md                    # (Optional, user-created) Brand voice,
+                                          # target audience, catalog info, past
+                                          # learnings — auto-loaded by all sub-skills
 ```
 
 ## Sources
@@ -94,6 +114,9 @@ This skill is built on verified information from:
 - **Amazon Q3/Q4 2025 Earnings Calls** — Rufus scale and impact data
 - **Adobe Analytics** — Holiday 2025 AI shopping traffic data
 - **SellerSprite** — Backend search terms checklist (2026)
+- **SellerApp** — Backend keywords guide (2026)
+- **CLOSO** — Backend keywords masterclass (2026)
+- **Lead Advisors** — Backend search terms guide (2025)
 - **Goat Consulting** — Product detail page rules compliance
 - **Flairox** — PDP rules compliance checklist
 
@@ -102,13 +125,13 @@ This skill is built on verified information from:
 The skill works completely standalone. If you have MCP servers connected,
 it can optionally use:
 
-| MCP Server                      | Enhancement                              |
-|---------------------------------|------------------------------------------|
-| AmazonSeller-mcp-server        | Pull live catalog/listing data           |
-| Amazon Ads MCP (Official)       | Ad performance data for keyword priority |
-| KuudoAI/amazon_ads_mcp          | Campaign analytics integration           |
-| Seller Labs MCP                 | Profitability data for ASIN priority     |
-| PPC Prophet MCP                 | PPC data + n8n workflow integration      |
+| MCP Server                      | Enhancement                                    |
+|---------------------------------|------------------------------------------------|
+| AmazonSeller-mcp-server        | Pull live catalog data and current listing copy |
+| Amazon Ads MCP (Official)       | Tie listing changes to ad performance data     |
+| KuudoAI/amazon_ads_mcp          | Campaign data for keyword prioritization       |
+| Seller Labs MCP                 | Profitability data to prioritize ASINs         |
+| PPC Prophet MCP                 | PPC data + n8n workflow integration            |
 
 ## Contributing
 

@@ -86,3 +86,4 @@ are available, sub-skills can optionally use:
 | Amazon Ads MCP (Official)       | Tie listing changes to ad performance data     |
 | KuudoAI/amazon_ads_mcp          | Campaign data for keyword prioritization       |
 | Seller Labs MCP                 | Profitability data to prioritize ASINs         |
+| PPC Prophet MCP                 | PPC data + n8n workflow integration            |

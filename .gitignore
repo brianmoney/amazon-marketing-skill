@@ -1,1 +1,22 @@
+# Local agent/tooling workspaces
 .claude/
+.opencode/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+*.swp
+*.swo
+*~
