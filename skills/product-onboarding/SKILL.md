@@ -54,7 +54,7 @@ Preferred order:
 Suggested `asins.csv` columns:
 
 ```csv
-asin,sku,marketplace,amazon_url,product_label,status,notes
+sku,asin,marketplace,amazon_url,product_label,status,notes
 ```
 
 Required columns:

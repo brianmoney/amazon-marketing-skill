@@ -19,7 +19,7 @@ Creates, optimizes, and audits Amazon product detail page content:
 - **Keyword research** — Tiered keyword maps with placement recommendations
 - **Competitor analysis** — Structured teardowns with gap identification
 - **Listing audits** — Compliance checks + quality scoring (0-100)
-- **Product onboarding** — Build per-ASIN product context from `asins.csv`
+- **Product onboarding** — Build per-product context from `asins.csv` using SKU/ASIN references
 
 All grounded in Amazon's actual policies (verified through April 2026) and
 current best practices for both A9/A10 keyword search and Rufus AI
@@ -45,9 +45,9 @@ Just ask your AI agent:
 - "Write bullet points for my [product]"
 - "Audit this Amazon listing" + paste content
 - "Do keyword research for [product category]"
-- "Analyze these competitor listings" + paste ASINs/content
+- "Analyze these competitor listings" + paste SKUs, ASINs, or listing content
 - "Plan A+ Content for my product"
-- "Onboard these ASINs from asins.csv"
+- "Onboard these products from asins.csv"
 
 ### Personalizing for Your Brand
 
@@ -85,11 +85,14 @@ Structured templates are included in:
 The `product-onboarding` skill turns `asins.csv` into structured product files
 that the rest of the skill suite can reuse.
 
+Sellers can identify products by SKU or ASIN. The canonical product file path
+still uses the ASIN when known: `products/[ASIN]/product-context.md`.
+
 Recommended workflow:
 
 1. Create `asins.csv` in the project root
 2. Add one row per product you want to onboard
-3. Ask the agent to onboard the ASINs
+3. Ask the agent to onboard the products
 4. Let the agent capture public PDP data from Amazon
 5. Answer the follow-up questions for missing business context
 6. Reuse `brand-context.md` and `products/[ASIN]/product-context.md` across
@@ -98,9 +101,9 @@ Recommended workflow:
 Suggested `asins.csv` format:
 
 ```csv
-asin,marketplace,amazon_url,product_label,status,notes
-B000000001,US,https://www.amazon.com/dp/B000000001,Main product,pending,
-B000000002,US,,Variant 2,pending,Needs keyword validation
+sku,asin,marketplace,amazon_url,product_label,status,notes
+SKU-001,B000000001,US,https://www.amazon.com/dp/B000000001,Main product,pending,
+SKU-002,B000000002,US,,Variant 2,pending,Needs keyword validation
 ```
 
 The onboarding skill uses this fallback order for product introspection:
@@ -130,7 +133,7 @@ What usually still requires user input:
 - certifications/compliance claims
 - warranty details
 - primary and secondary keywords
-- converting search terms and important competitor ASINs
+- converting search terms and important competitor SKUs/ASINs
 
 This separation is intentional:
 
@@ -144,11 +147,11 @@ This separation is intentional:
 amazon-marketing-skill/
 ├── SKILL.md                              # Main orchestrator
 ├── README.md
-├── asins.csv                             # (Optional, user-created) ASIN onboarding queue
+├── asins.csv                             # (Optional, user-created) SKU/ASIN onboarding queue
 ├── brand-context.md                      # (Optional, user-created) Shared brand guidance
 │
 ├── skills/
-│   ├── product-onboarding/SKILL.md       # Builds per-ASIN context files
+│   ├── product-onboarding/SKILL.md       # Builds per-product context files
 │   ├── listing-optimizer/SKILL.md        # Title, bullets, desc, backend
 │   ├── keyword-research/SKILL.md         # Keyword maps and gap analysis
 │   ├── competitor-analysis/SKILL.md      # Competitor teardowns
@@ -163,7 +166,7 @@ amazon-marketing-skill/
 ├── templates/
 │   ├── brand-context.template.md         # Shared brand context template
 │   ├── listing-brief.md                  # Product info input template
-│   ├── product-context.template.md       # Per-ASIN context template
+│   ├── product-context.template.md       # Per-product context template
 │   ├── keyword-map.md                    # Keyword mapping output template
 │   └── audit-scorecard.md                # Audit scoring template
 │
@@ -206,11 +209,11 @@ it can optionally use:
 
 | MCP Server                      | Enhancement                                    |
 |---------------------------------|------------------------------------------------|
-| Playwright MCP / CLI            | Browser-based PDP capture for ASIN onboarding  |
+| Playwright MCP / CLI            | Browser-based PDP capture for product onboarding |
 | AmazonSeller-mcp-server        | Pull live catalog data and current listing copy |
 | Amazon Ads MCP (Official)       | Tie listing changes to ad performance data     |
 | KuudoAI/amazon_ads_mcp          | Campaign data for keyword prioritization       |
-| Seller Labs MCP                 | Profitability data to prioritize ASINs         |
+| Seller Labs MCP                 | Profitability data to prioritize products      |
 | PPC Prophet MCP                 | PPC data + n8n workflow integration            |
 
 ## Contributing
