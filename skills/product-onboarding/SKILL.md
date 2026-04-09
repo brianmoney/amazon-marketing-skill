@@ -22,6 +22,10 @@ For each product the user wants to onboard:
 4. Ask the user only for missing, high-value business context
 5. Write or update `products/[ASIN]/product-context.md`
 
+When a product belongs to a variation family, also capture enough structured
+family context that downstream listing work can differentiate child ASIN copy
+without guessing.
+
 ## File Conventions
 
 - Shared brand context lives in `brand-context.md` in the project root or
@@ -102,11 +106,20 @@ Extract only what is visible with reasonable confidence:
 - Bullet points
 - Description text
 - A+ Content presence and visible text summary
+- Parent ASIN if shown
 - Variants or pack/size options shown on the PDP
 - Product specs / detail table content
 - Materials, dimensions, and included items if explicitly shown
 - Image/video count and notable themes
 - Visible badges (Amazon's Choice, climate badge, coupons, etc.)
+
+If the product appears to be part of a variation family, also capture when
+visible or user-confirmed:
+
+- variation family label or theme
+- child attributes such as `set_name`, `shape`, `count`, `capacity`, size, or configuration
+- which traits appear shared across the family
+- which traits appear child-specific
 
 ## Provenance Rules
 
@@ -141,6 +154,14 @@ Ask only for missing or low-confidence information, prioritizing:
 7. Converting search terms from ads or prior testing
 8. Competitor ASINs or SKUs to benchmark against
 9. Claims or phrases to avoid
+
+For variation families, also ask only as needed:
+
+1. Which ASIN is the parent
+2. Which children should inherit shared copy vs. receive differentiated copy
+3. Which child attributes are confirmed: `set_name`, `shape`, `count`, `capacity`
+4. Whether materials, construction, and seal mechanism are identical across all children
+5. Any child-specific positioning such as entry set, combo, flagship, travel size
 
 If scraping fails completely, ask the user to paste the current title, bullets,
 description, and product specs before asking broader strategic questions.
@@ -177,8 +198,12 @@ Based on observed data, generate cautious inferences for:
 - apparent use cases
 - apparent positioning
 - apparent differentiators
+- possible shared-vs-unique variation traits
 
 Mark anything uncertain as requiring user confirmation.
+
+Do not infer shape-specific mechanics or child-specific included items unless the
+PDP or user confirms them.
 
 ### Step 4: Ask Missing Questions
 
@@ -193,6 +218,10 @@ Update:
 - `products/[ASIN]/product-context.md` for each onboarded product
 
 Preserve prior user-confirmed data unless the user updates it.
+
+If the product belongs to a variation family, preserve structured family fields
+and add placeholder listing-draft sections so downstream optimization can write
+child-specific bullets, description, and backend terms into the product note.
 
 ### Step 6: Mark Completion
 
@@ -224,6 +253,14 @@ fallback interview sequence.
 - Which search terms or ad keywords have already converted well?
 - Which competitor ASINs or SKUs should this product be benchmarked against?
 
+### Additional Variation Questions
+
+- Is this the parent ASIN or a child ASIN?
+- What is the parent ASIN for this family?
+- What variation attributes should we track for this child: `set_name`, `shape`, `count`, `capacity`, size, configuration?
+- Which materials or mechanisms are shared across the family?
+- What is unique about this child's natural use case or positioning?
+
 ### If The PDP Could Not Be Read
 
 Ask the user to paste:
@@ -240,6 +277,9 @@ After onboarding, other Amazon marketing skills should use:
 
 1. `brand-context.md` for shared brand voice and rules
 2. `products/[ASIN]/product-context.md` for product-specific data
+
+For variation families, downstream skills should read both the parent context and
+all relevant child contexts before reusing inherited copy.
 
 If multiple products are onboarded and the user does not specify one, ask which
 SKU or ASIN to use before generating listing content.

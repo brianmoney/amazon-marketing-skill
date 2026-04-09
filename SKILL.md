@@ -11,8 +11,10 @@ description: >
   If the user pastes an Amazon URL, ASIN, SKU, or product data and wants copy written
   or improved, use this skill. Also trigger when the user wants to onboard
   products from `asins.csv`, create `products/[ASIN]/product-context.md`, or
-  bootstrap product context from live Amazon pages. Even if they just say
-  "optimize my listing" or "write bullets" — this is the skill.
+  bootstrap product context from live Amazon pages. Also trigger when the user
+  wants to differentiate copy across parent/child variants or customize bullets
+  for variation children that share inherited parent content. Even if they just
+  say "optimize my listing" or "write bullets" — this is the skill.
 ---
 
 # Amazon Marketing Skill
@@ -41,23 +43,29 @@ practices for both A9/A10 keyword search and Rufus AI conversational discovery.
    → Create or update `products/[ASIN]/product-context.md`
 
 3. **User wants to improve an existing listing?**
-   → Load `skills/listing-audit/SKILL.md` first to score current state
-   → Then load `skills/listing-optimizer/SKILL.md` to rewrite weak elements
+    → Load `skills/listing-audit/SKILL.md` first to score current state
+    → Then load `skills/listing-optimizer/SKILL.md` to rewrite weak elements
 
-4. **User wants keyword research?**
+4. **User wants to differentiate child ASIN copy inside a variation family?**
+   → Load `skills/listing-optimizer/SKILL.md`
+   → Resolve the parent product context plus all relevant child product contexts
+   → Apply the variation-child differentiation workflow
+   → Write per-child drafts back into each child's `## Listing Draft` section
+
+5. **User wants keyword research?**
    → Load `skills/keyword-research/SKILL.md`
    → Accept seed keywords, competitor ASINs, competitor SKUs, or product descriptions
    → Output structured keyword map
 
-5. **User wants competitor analysis?**
+6. **User wants competitor analysis?**
    → Load `skills/competitor-analysis/SKILL.md`
    → Tear down 3-5 competitor listings
 
-6. **User wants A+ Content planning?**
+7. **User wants A+ Content planning?**
    → Load `skills/a-plus-content/SKILL.md`
    → Plan module layout, write copy, create image briefs
 
-7. **User wants a quick fix on one element (e.g., "just fix my title")?**
+8. **User wants a quick fix on one element (e.g., "just fix my title")?**
    → Jump directly to that section in `skills/listing-optimizer/SKILL.md`
 
 ## Context Loading
@@ -67,6 +75,10 @@ Before generating any product-specific content, resolve context in this order:
 1. Load `brand-context.md` from the project root or `.agents/` directory if it exists
 2. Resolve the product the user names by SKU or ASIN, then load its `products/[ASIN]/product-context.md`
 3. If multiple products exist and the user has not specified one, ask which SKU or ASIN to use
+
+For variation-family requests, load the parent context and every relevant child
+context together before deciding which claims stay shared versus which need
+child-specific copy.
 
 When resolving a product reference, sellers may identify products by SKU or ASIN.
 The canonical file path remains `products/[ASIN]/product-context.md`, so use the
@@ -88,6 +100,9 @@ When reading product context, prefer this provenance order:
 3. `AI Inferences`
 
 Do not treat inferences as confirmed business facts.
+
+Do not assume shared mechanics, capacities, or included items across variation
+children unless the product context or user has confirmed them.
 
 ## Reference Files
 

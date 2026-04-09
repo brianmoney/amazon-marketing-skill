@@ -4,8 +4,9 @@ description: >
   Generate or rewrite Amazon product listing content: titles, bullet points,
   product descriptions, and backend search terms. Use when the user wants to
   create a new listing, rewrite existing copy, optimize specific elements,
-  or generate Amazon-compliant product content. Handles full listings or
-  individual elements (e.g., "just fix my title").
+  or generate Amazon-compliant product content. Handles full listings,
+  individual elements (e.g., "just fix my title"), and variation-child copy
+  differentiation when multiple products inherit shared parent positioning.
 ---
 
 # Listing Optimizer
@@ -42,6 +43,15 @@ Resolve product references by SKU or ASIN using the product context file's
 If multiple product folders exist and the user has not specified a product, ask
 which SKU or ASIN to use before writing.
 
+If the user wants to differentiate child ASINs within one variation family,
+load the parent product context plus every relevant child product context before
+writing. Use confirmed variation fields such as `Parent ASIN`, `Variation
+family`, `set_name`, `shape`, `count`, and `capacity` when available.
+
+Never assume shared mechanics across variants. If a construction detail, seal
+mechanism, included accessory, or capacity claim is not confirmed in product
+data or by the user, treat it as unknown and ask or leave it out.
+
 ## Workflow
 
 ### Step 1: Interview (if needed)
@@ -49,6 +59,51 @@ which SKU or ASIN to use before writing.
 If the user hasn't provided sufficient product info, interview them using
 the framework from `templates/listing-brief.md`. Keep it conversational.
 Minimum viable info to start: product name, 3-5 key features, target buyer.
+
+If this is a variation-child differentiation request, confirm only the missing
+child-specific facts needed to safely customize copy:
+
+- Which parent ASIN or parent product context governs the family
+- Which child ASINs or SKUs should be rewritten
+- Which child attributes are confirmed: `set_name`, `shape`, `count`, `capacity`
+- Whether materials and seal mechanism are truly identical across the family
+- Any child-specific positioning: entry set, combo, flagship, travel size, etc.
+
+### Step 1A: Variation Child Differentiation Mode
+
+Use this mode when the user wants to customize copy across variation children
+that share inherited parent content.
+
+**Required Inputs:**
+1. Parent `product-context.md`
+2. All relevant child `product-context.md` files
+3. Confirmed child attributes, especially `set_name`, `shape`, `count`, and
+   `capacity`
+4. Any confirmed notes on what is shared across the family vs. unique per child
+
+**Differentiation Rules:**
+1. Keep the family-level strategy aligned so the variation set still feels like
+   one product line
+2. Make Bullet 4 fully unique for each child: name the shape, count, and one
+   shape-specific or configuration-specific benefit that is actually supported by
+   the product data
+3. Adapt Bullets 1 and 5 so the use-case examples match the child's natural fit
+   and positioning
+4. Keep Bullets 2 and 3 identical only when the physical construction,
+   materials, and seal mechanism are confirmed to be the same across the family
+5. Rewrite the description to remove inherited parent references and reposition
+   the value proposition for that specific child
+6. Add child-only backend terms that match the actual shape/configuration and
+   remove terms that do not apply to that child
+
+**Use-Case Guidance:**
+- Rectangular variants naturally support casserole, leftovers, or fridge-shelf use
+- Square variants naturally support stacking, pantry organization, or shelf efficiency
+- Combo variants naturally support flexibility, mixed meal prep, or households
+  that want multiple formats
+
+Treat the examples above as directional only. Use them only if they match the
+confirmed variant data.
 
 ### Step 2: Generate Title
 
@@ -138,6 +193,14 @@ and grab-and-go convenience
 - [ ] Does each bullet connect a feature to a use case? (Rufus optimization)
 - [ ] Would a shopper scanning these bullets in 5 seconds get the key value?
 
+**If differentiating variation children, apply these bullet rules:**
+- [ ] Bullet 4 is fully child-specific and names the actual shape/configuration,
+  count, and a supported benefit
+- [ ] Bullets 1 and 5 use examples that fit the child's natural use case
+- [ ] Bullets 2 and 3 remain shared only if construction and mechanism are
+  confirmed identical
+- [ ] No child uses backend logic or visible copy that describes another child
+
 ### Step 4: Generate Product Description
 
 **Process:**
@@ -171,6 +234,8 @@ or a practical next step]
 - [ ] No prohibited content (URLs, pricing, reviews, promotional claims)?
 - [ ] Addresses a buyer objection specific to this category?
 - [ ] Covers use cases or scenarios not mentioned in bullets? (Rufus optimization)
+- [ ] If this is a child ASIN, inherited parent model references have been removed?
+- [ ] The value proposition matches this child's positioning within the family?
 
 ### Step 5: Generate Backend Search Terms
 
@@ -194,6 +259,8 @@ or a practical next step]
 - [ ] Includes Spanish translations (US marketplace only)?
 - [ ] Includes relevant synonyms and alternative names?
 - [ ] Highest-value keywords placed first in the string?
+- [ ] Variation-child terms match the actual shape/configuration and omit
+  inapplicable family terms?
 
 ---
 
@@ -233,3 +300,36 @@ After presenting, ask the user:
 1. "Does this match your brand voice?"
 2. "Any features or use cases I should emphasize more?"
 3. "Want me to audit the keyword coverage or adjust any section?"
+
+## Variation Child Output Mode
+
+When the user asks for differentiation across a parent/child variation family,
+write the proposed copy into each child's `products/[ASIN]/product-context.md`
+under `## Listing Draft`.
+
+Use this structure:
+
+```
+## Listing Draft
+
+### Bullet Drafts
+1. [bullet 1]
+2. [bullet 2]
+3. [bullet 3]
+4. [bullet 4]
+5. [bullet 5]
+
+### Description Draft
+[description text]
+
+### Backend Search Terms Draft
+[keyword string]
+
+### Differentiation Notes
+- Shared bullets kept from family: [bullet numbers or "none"]
+- Child-specific angles introduced: [short notes]
+- Facts still requiring confirmation: [short notes or "none"]
+```
+
+If the user wants drafts only in chat, present the same per-child structure in
+the response instead of editing files.

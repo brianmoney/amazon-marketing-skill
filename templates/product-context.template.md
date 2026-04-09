@@ -3,6 +3,9 @@
 ## Product Identity
 - SKU:
 - ASIN:
+- Parent ASIN:
+- Variation role: Parent / Child / Standalone
+- Variation family:
 - Marketplace:
 - Canonical URL:
 - Product label:
@@ -29,6 +32,18 @@
 - Image/video notes:
 - Visible badges:
 
+## Variation Context
+- Child attributes:
+  - set_name:
+  - shape:
+  - count:
+  - capacity:
+  - size/configuration:
+- Shared across family:
+- Child-specific differentiators:
+- Shared materials/mechanism confirmed:
+- Notes requiring confirmation:
+
 ## AI Inferences
 - Apparent target buyer:
 - Apparent use cases:
@@ -49,12 +64,31 @@
 - Claims/phrases to avoid:
 - Brand-specific notes:
 
+## Listing Draft
+
+### Bullet Drafts
+1.
+2.
+3.
+4.
+5.
+
+### Description Draft
+
+### Backend Search Terms Draft
+
+### Differentiation Notes
+- Shared bullets kept from family:
+- Child-specific angles introduced:
+- Facts still requiring confirmation:
+
 ## Missing Information
 - [ ] Target audience confirmed
 - [ ] Differentiators confirmed
 - [ ] Keyword targets confirmed
 - [ ] Compliance claims confirmed
 - [ ] Warranty confirmed
+- [ ] Variation data confirmed (if applicable)
 
 ## Onboarding Log
 - YYYY-MM-DD: File created

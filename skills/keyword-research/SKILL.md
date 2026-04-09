@@ -34,6 +34,11 @@ Resolve product references by SKU or ASIN using the product context file's
 If multiple product folders exist and the user has not specified a product, ask
 which SKU or ASIN to use before building the keyword map.
 
+If the user is working on a variation family, load the parent product context
+plus the relevant child product contexts before finalizing keyword placement or
+backend terms. Map shape, count, capacity, and configuration terms to the child
+they actually describe rather than inheriting them across the family by default.
+
 ## How This Skill Works
 
 This skill does NOT have access to live Amazon search volume data. It works by:
@@ -154,6 +159,10 @@ After mapping, take all Tier 4 keywords and build the backend search terms strin
 3. Order by estimated value (highest first)
 4. Calculate byte count
 5. Trim to under 235 bytes (safety buffer for 249 limit)
+
+For variation families, build backend strings per child ASIN. Add only the
+shape/configuration terms that apply to that child and remove family terms that
+would misdescribe the variant.
 
 See `references/backend-keywords-guide.md` for detailed formatting rules.
 
