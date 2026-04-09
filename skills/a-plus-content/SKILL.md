@@ -195,15 +195,13 @@ The static wide banner image behind the scrollable card modules.
 | Mobile background image | 463 × 625 px (min) |
 | Headline (optional) | 30 characters max |
 | Body text (optional) | 135 characters max |
-| Brand logo | Uploaded separately; renders upper-left on desktop |
 
 **Design guidance for background images:**
 - **Desktop**: Keep the right 2/3 plain/clean — carousel cards overlay this area.
-  Place logo and any key visuals in the **top-left corner**.
-- **Mobile**: Cards take up most of the visible area. Place logo **top-center**
-  in the upper ~25% of the 463 × 625 frame. Use a downward chevron, partial
-  image crop, or gradient fade at the bottom to guide shoppers to scroll into
-  the card modules.
+  Key visuals can go in the **left third** but avoid text or logos in the image.
+- **Mobile**: Cards take up most of the visible area. Use a downward chevron,
+  partial image crop, or gradient fade at the bottom to guide shoppers to scroll
+  into the card modules.
 - Design desktop and mobile images separately — do not simply crop one from
   the other.
 
@@ -213,7 +211,7 @@ The static wide banner image behind the scrollable card modules.
 |---|---|---|---|
 | **Brand ASIN & Store Showcase** | 4 ASIN images at 166 × 182 px each (auto-populated from ASIN or override with custom image) | Headline: 30 chars | Links to 4 ASINs + optional Brand Store link |
 | **Brand Focus Image** | 1 image at 362 × 453 px (min) | Headline: 30 chars; Body: 135 chars | None |
-| **Brand Logo & Description** | 1 logo image at 315 × 145 px | Body: up to 450 chars | None |
+| **Brand Logo & Description** | 1 logo image at 315 × 145 px | Headline: 30 chars; Body: up to 450 chars | None |
 | **Brand Q&A** | None | Up to 3 questions + answers; 600 chars total | None |
 
 **Common mistakes to avoid:**
